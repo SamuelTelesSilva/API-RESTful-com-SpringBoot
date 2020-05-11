@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class IndexController {
 
 	@GetMapping
-	public String hello() {
+	public String ola() {
 		return "Hello Spring Boot";
 	}
 	
