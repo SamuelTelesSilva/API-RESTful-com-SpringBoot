@@ -67,4 +67,12 @@ public class CarrosService {
 		
 	}
 
+	public void delete(Long id) {
+		Optional<Carro> carro = getCarroId(id);
+		if(carro.isPresent()) {
+			carroRepository.deleteById(id);
+		}
+		
+	}
+
 }
