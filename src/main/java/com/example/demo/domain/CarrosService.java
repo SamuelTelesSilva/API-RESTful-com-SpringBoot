@@ -19,7 +19,7 @@ public class CarrosService {
 
 	public List<CarroDTO> getCarro() {
 
-		return carroRepository.findAll().stream().map(CarroDTO::new).collect(Collectors.toList());
+		return carroRepository.findAll().stream().map(CarroDTO::create).collect(Collectors.toList());
 
 		/*
 		 * mesma coisa List<Carro> carros = carroRepository.findAll(); List<CarroDTO>
@@ -29,12 +29,12 @@ public class CarrosService {
 	}
 
 	public Optional<CarroDTO> getCarroId(Long id) {
-		return carroRepository.findById(id).map(CarroDTO::new);
+		return carroRepository.findById(id).map(CarroDTO::create);
 	}
 
 	public List<CarroDTO> getCarroByTipo(String tipo) {
 
-		return carroRepository.findByTipo(tipo).stream().map(CarroDTO::new).collect(Collectors.toList());
+		return carroRepository.findByTipo(tipo).stream().map(CarroDTO::create).collect(Collectors.toList());
 	}
 
 	
