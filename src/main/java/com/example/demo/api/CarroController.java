@@ -35,7 +35,7 @@ public class CarroController {
 
 	@GetMapping("/{id}")
 	public ResponseEntity get(@PathVariable("id") Long id) {
-		Optional<Carro> carro = carrosService.getCarroId(id);
+		Optional<CarroDTO> carro = carrosService.getCarroId(id);
 
 		//lambdas
 		return carro

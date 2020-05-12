@@ -28,8 +28,8 @@ public class CarrosService {
 		 */
 	}
 
-	public Optional<Carro> getCarroId(Long id) {
-		return carroRepository.findById(id);
+	public Optional<CarroDTO> getCarroId(Long id) {
+		return carroRepository.findById(id).map(CarroDTO::new);
 	}
 
 	public List<CarroDTO> getCarroByTipo(String tipo) {
@@ -47,7 +47,7 @@ public class CarrosService {
 		Assert.notNull(id, "Não foi possivel atualizar o registro");
 
 		// Buscar o carro no Banco de dados
-		Optional<Carro> optional = getCarroId(id);
+		Optional<Carro> optional = carroRepository.findById(id);
 		if (optional.isPresent()) {
 			Carro db = optional.get();
 			// Copiar as propriedades
@@ -66,8 +66,8 @@ public class CarrosService {
 	}
 
 	public void delete(Long id) {
-		Optional<Carro> carro = getCarroId(id);
-		if (carro.isPresent()) {
+		
+		if (getCarroId(id).isPresent()) {
 			carroRepository.deleteById(id);
 		}
 
