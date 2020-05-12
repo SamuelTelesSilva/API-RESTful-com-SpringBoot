@@ -2,8 +2,8 @@ package com.example.demo.api;
 
 import java.util.Optional;
 
+
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -31,8 +31,29 @@ public class CarroController {
 	}
 
 	@GetMapping("/{id}")
-	public Optional<Carro> get(@PathVariable("id") Long id) {
-		return carrosService.getCarroId(id);
+	public ResponseEntity get(@PathVariable("id") Long id) {
+		Optional<Carro> carro = carrosService.getCarroId(id);
+
+		//lambdas
+		return carro
+				.map(ResponseEntity::ok)
+				.orElse(ResponseEntity.notFound().build());
+		
+		
+		/*
+		
+		//if ternario  a sintaxe é: (Expressão) ? ValorTrue : ValorFalse
+		return carro.isPresent() ?
+				ResponseEntity.ok(carro.get()) :
+				ResponseEntity.notFound().build();
+		
+		Uma forma de fazer o erro 404
+		if (carro.isPresent()) {
+			return ResponseEntity.ok(carro.get());
+		}else {
+			return ResponseEntity.notFound().build();
+		}*/
+		
 	}
 
 	@GetMapping("/tipo/{tipo}")
