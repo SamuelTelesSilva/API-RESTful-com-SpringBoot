@@ -16,6 +16,7 @@ public class IndexController {
 		return "get Spring Boot";
 	}
 	
+	/*
 	@PostMapping
 	public String post() {
 		return "Post Spring Boot";
@@ -30,5 +31,6 @@ public class IndexController {
 	public String delete() {
 		return "delete Spring Boot";
 	}
+	*/
 	
 }
