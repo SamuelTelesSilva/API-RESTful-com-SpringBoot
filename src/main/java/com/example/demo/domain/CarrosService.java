@@ -37,4 +37,9 @@ public class CarrosService {
 		return carros;
 	}
 
+	public Carro save(Carro carro) {
+		return carroRepository.save(carro);
+		
+	}
+
 }
