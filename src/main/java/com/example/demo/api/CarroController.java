@@ -30,74 +30,66 @@ public class CarroController {
 	@GetMapping
 	public ResponseEntity get() {
 		return ResponseEntity.ok(carrosService.getCarro());
-		//return new ResponseEntity <>(carrosService.getCarro(), HttpStatus.OK);
-		
-		
+		// return new ResponseEntity <>(carrosService.getCarro(), HttpStatus.OK);
+
 	}
 
 	@GetMapping("/{id}")
 	public ResponseEntity get(@PathVariable("id") Long id) {
 		Optional<CarroDTO> carro = carrosService.getCarroId(id);
 
-		//lambdas
-		return carro
-				.map(ResponseEntity::ok)
-				.orElse(ResponseEntity.notFound().build());
-		
-		
+		// lambdas
+		return carro.map(ResponseEntity::ok).orElse(ResponseEntity.notFound().build());
+
 		/*
-		
-		//if ternario  a sintaxe é: (Expressão) ? ValorTrue : ValorFalse
-		return carro.isPresent() ?
-				ResponseEntity.ok(carro.get()) :
-				ResponseEntity.notFound().build();
-		
-		Uma forma de fazer o erro 404
-		if (carro.isPresent()) {
-			return ResponseEntity.ok(carro.get());
-		}else {
-			return ResponseEntity.notFound().build();
-		}*/
-		
+		 * 
+		 * //if ternario a sintaxe é: (Expressão) ? ValorTrue : ValorFalse return
+		 * carro.isPresent() ? ResponseEntity.ok(carro.get()) :
+		 * ResponseEntity.notFound().build();
+		 * 
+		 * Uma forma de fazer o erro 404 if (carro.isPresent()) { return
+		 * ResponseEntity.ok(carro.get()); }else { return
+		 * ResponseEntity.notFound().build(); }
+		 */
+
 	}
 
 	@GetMapping("/tipo/{tipo}")
 	public ResponseEntity getCarrosByTipo(@PathVariable("tipo") String tipo) {
-		List <CarroDTO> carros =  carrosService.getCarroByTipo(tipo);
+		List<CarroDTO> carros = carrosService.getCarroByTipo(tipo);
 
-		return carros.isEmpty() ?
-				ResponseEntity.noContent().build() :
-				ResponseEntity.ok(carros);
+		return carros.isEmpty() ? ResponseEntity.noContent().build() : ResponseEntity.ok(carros);
 	}
 
 	@PostMapping
 	public ResponseEntity post(@RequestBody Carro carro) {
 
 		try {
-		CarroDTO c = carrosService.insert(carro);
-		
-		URI location = getUri(c.getId());
-		return ResponseEntity.created(location).build();
-		}catch (Exception ex) {
+			CarroDTO c = carrosService.insert(carro);
+
+			URI location = getUri(c.getId());
+			return ResponseEntity.created(location).build();
+		} catch (Exception ex) {
 			return ResponseEntity.badRequest().build();
 		}
 	}
-	
-	
-	private URI getUri (Long id) {
-		return ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
-				.buildAndExpand(id).toUri();
+
+	private URI getUri(Long id) {
+		return ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(id).toUri();
 	}
 
 	@PutMapping("/{id}")
-	public String put(@PathVariable("id") Long id, @RequestBody Carro carro) {
+	public ResponseEntity put(@PathVariable("id") Long id, @RequestBody Carro carro) {
 
-		Carro c = carrosService.update(carro, id);
+		carro.setId(id);
 
-		return "Carro Atualizado com Sucesso" + c.getId();
+		CarroDTO c = carrosService.update(carro, id);
+
+		return c != null ? ResponseEntity.ok(c) :
+			ResponseEntity.notFound().build();
 
 	}
-	
+
 	@DeleteMapping("/{id}")
 	public String delete(@PathVariable("id") Long id) {
 

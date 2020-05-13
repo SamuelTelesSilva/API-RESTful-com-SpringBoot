@@ -44,7 +44,7 @@ public class CarrosService {
 
 	}
 
-	public Carro update(Carro carro, Long id) {
+	public CarroDTO update(Carro carro, Long id) {
 		Assert.notNull(id, "Não foi possivel atualizar o registro");
 
 		// Buscar o carro no Banco de dados
@@ -59,9 +59,10 @@ public class CarrosService {
 			// Atualiza o Carro
 			carroRepository.save(db);
 
-			return db;
+			return CarroDTO.create(db);
 		} else {
-			throw new RuntimeException("Não foi possivel atualizar o registro");
+			return null;
+			//throw new RuntimeException("Não foi possivel atualizar o registro");
 		}
 
 	}
