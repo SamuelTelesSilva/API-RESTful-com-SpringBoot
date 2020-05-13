@@ -23,5 +23,7 @@ public class ExceptionConfig extends ResponseEntityExceptionHandler {
 	public ResponseEntity errorBadRequest(Exception ex) {
 		return ResponseEntity.badRequest().build();
 	}
+	
+	
 
 }

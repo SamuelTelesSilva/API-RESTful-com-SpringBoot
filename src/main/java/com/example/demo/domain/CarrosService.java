@@ -1,6 +1,5 @@
 package com.example.demo.domain;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -10,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
 import com.example.demo.domain.dto.CarroDTO;
+import com.example.demo.domain.exception.ObjectNotFoundException;
 
 @Service
 public class CarrosService {
@@ -28,13 +28,14 @@ public class CarrosService {
 		 */
 	}
 
-	public Optional<CarroDTO> getCarroId(Long id) {
-		return carroRepository.findById(id).map(CarroDTO::create);
+	public CarroDTO getCarroId(Long id) {
+		return carroRepository.findById(id).map(CarroDTO::create).orElseThrow(() -> new ObjectNotFoundException("Carro não encontrado"));
 	}
 
 	public List<CarroDTO> getCarroByTipo(String tipo) {
 
-		return carroRepository.findByTipo(tipo).stream().map(CarroDTO::create).collect(Collectors.toList());
+		return carroRepository.findByTipo(tipo).stream().map(CarroDTO::create)
+				.collect(Collectors.toList());
 	}
 
 	
