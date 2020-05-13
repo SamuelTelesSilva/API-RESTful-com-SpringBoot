@@ -67,13 +67,9 @@ public class CarrosService {
 
 	}
 
-	public boolean delete(Long id) {
+	public void delete(Long id) {
 		
-		if (getCarroId(id).isPresent()) {
-			carroRepository.deleteById(id);
-			return true;
-		}
-		return false;
+		carroRepository.deleteById(id);
 
 	}
 
