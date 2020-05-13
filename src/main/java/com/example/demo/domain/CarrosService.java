@@ -39,7 +39,7 @@ public class CarrosService {
 
 	
 	public CarroDTO insert(Carro carro) {
-		
+		Assert.isNull(carro.getId(), "Não foi possivel inserir o registro");
 		return CarroDTO.create(carroRepository.save(carro));
 
 	}
