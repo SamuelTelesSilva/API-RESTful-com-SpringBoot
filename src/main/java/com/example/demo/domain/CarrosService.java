@@ -38,8 +38,9 @@ public class CarrosService {
 	}
 
 	
-	public Carro insert(Carro carro) {
-		return carroRepository.save(carro);
+	public CarroDTO insert(Carro carro) {
+		
+		return CarroDTO.create(carroRepository.save(carro));
 
 	}
 
